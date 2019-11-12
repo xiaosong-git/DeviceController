@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xs.dc.dao.DcAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.xs.dc.bean.DcArea" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="org_tel" property="orgTel" jdbcType="VARCHAR" />
+    <result column="org_addr" property="orgAddr" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="org_privince" property="orgPrivince" jdbcType="VARCHAR" />
+    <result column="org_city" property="orgCity" jdbcType="VARCHAR" />
+    <result column="org_area" property="orgArea" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_code, org_name, org_tel, org_addr, createDate, org_privince, org_city, org_area
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dc_area
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dc_area
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xs.dc.bean.DcArea" >
+    insert into dc_area (id, org_code, org_name, 
+      org_tel, org_addr, createDate, 
+      org_privince, org_city, org_area
+      )
+    values (#{id,jdbcType=BIGINT}, #{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{orgTel,jdbcType=VARCHAR}, #{orgAddr,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{orgPrivince,jdbcType=VARCHAR}, #{orgCity,jdbcType=VARCHAR}, #{orgArea,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xs.dc.bean.DcArea" >
+    insert into dc_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="orgTel != null" >
+        org_tel,
+      </if>
+      <if test="orgAddr != null" >
+        org_addr,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="orgPrivince != null" >
+        org_privince,
+      </if>
+      <if test="orgCity != null" >
+        org_city,
+      </if>
+      <if test="orgArea != null" >
+        org_area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTel != null" >
+        #{orgTel,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddr != null" >
+        #{orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgPrivince != null" >
+        #{orgPrivince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCity != null" >
+        #{orgCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgArea != null" >
+        #{orgArea,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xs.dc.bean.DcArea" >
+    update dc_area
+    <set >
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTel != null" >
+        org_tel = #{orgTel,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddr != null" >
+        org_addr = #{orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgPrivince != null" >
+        org_privince = #{orgPrivince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCity != null" >
+        org_city = #{orgCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgArea != null" >
+        org_area = #{orgArea,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xs.dc.bean.DcArea" >
+    update dc_area
+    set org_code = #{orgCode,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      org_tel = #{orgTel,jdbcType=VARCHAR},
+      org_addr = #{orgAddr,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      org_privince = #{orgPrivince,jdbcType=VARCHAR},
+      org_city = #{orgCity,jdbcType=VARCHAR},
+      org_area = #{orgArea,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

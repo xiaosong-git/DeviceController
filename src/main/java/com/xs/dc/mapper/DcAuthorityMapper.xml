@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xs.dc.dao.DcAuthorityMapper">
+	<resultMap id="BaseResultMap" type="com.xs.dc.bean.DcAuthority">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
+		<result column="authority_grade" jdbcType="VARCHAR" property="authorityGrade" />
+		<result column="super_id" jdbcType="BIGINT" property="superId" />
+		<result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, authority_name, authority_grade, super_id, resource_url
+	</sql>
+	
+	<select id="getAuthorityList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from dc_authority
+	</select>
+	
+	<delete id="deleteAuthority" parameterType="java.lang.Long">
+		delete from dc_authority where (id = #{id,jdbcType=BIGINT} or super_id = #{id,jdbcType=BIGINT})
+	</delete>
+	
+	<insert id="insertAuthority" parameterType="com.xs.dc.bean.DcAuthority">
+	 	insert into dc_authority(authority_name, authority_grade, super_id,resource_url) values
+		(#{authorityName,jdbcType=VARCHAR}, #{authorityGrade,jdbcType=VARCHAR}, #{superId,jdbcType=BIGINT}, #{resourceUrl,jdbcType=VARCHAR} )
+	</insert>
+	
+	<update id="updateAuthority" parameterType="com.xs.dc.bean.DcAuthority">
+		update dc_authority
+		<set>
+			<if test="authorityName != null"> authority_name = #{authorityName,jdbcType=VARCHAR},
+			</if>
+			<if test="authorityGrade != null"> authority_grade = #{authorityGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="superId != null"> super_id = #{superId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getMenuList" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		SELECT
+		au.*
+		FROM
+		dc_user u LEFT JOIN dc_role r ON u.role_id = r.id
+		LEFT JOIN dc_role_authority rau on r.id = rau.role_id
+		LEFT JOIN dc_authority au on rau.authority_id = au.id
+		where u.id = #{userId,jdbcType=BIGINT} GROUP BY au.id
+	</select>
+	
+	<select id="findByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	    select * from dc_authority where id in (
+	    select authority_id from dc_role_authority where 1=1
+	    <if test="roleId != null">
+	    	and role_id = #{roleId}
+	    </if>
+	    )
+	</select>
+	<select id="findAll" resultMap="BaseResultMap">
+	    select * from dc_authority
+	</select>
+</mapper>

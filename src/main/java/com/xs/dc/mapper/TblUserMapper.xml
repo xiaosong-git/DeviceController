@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xs.dc.dao.TblUserMapper" >
+  <resultMap id="BaseResultMap" type="com.xs.dc.bean.TblUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="orgId" property="orgid" jdbcType="BIGINT" />
+    <result column="relationNo" property="relationno" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="niceName" property="nicename" jdbcType="VARCHAR" />
+    <result column="loginName" property="loginname" jdbcType="VARCHAR" />
+    <result column="idType" property="idtype" jdbcType="VARCHAR" />
+    <result column="idNO" property="idno" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="isAuth" property="isauth" jdbcType="VARCHAR" />
+    <result column="authDate" property="authdate" jdbcType="VARCHAR" />
+    <result column="authTime" property="authtime" jdbcType="VARCHAR" />
+    <result column="idFrontImgUrl" property="idfrontimgurl" jdbcType="VARCHAR" />
+    <result column="idOppositeImgUrl" property="idoppositeimgurl" jdbcType="VARCHAR" />
+    <result column="idHandleImgUrl" property="idhandleimgurl" jdbcType="VARCHAR" />
+    <result column="bankCardImgUrl" property="bankcardimgurl" jdbcType="VARCHAR" />
+    <result column="headImgUrl" property="headimgurl" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="isSetTransPwd" property="issettranspwd" jdbcType="VARCHAR" />
+    <result column="qrcodeUrl" property="qrcodeurl" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyid" jdbcType="BIGINT" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="workKey" property="workkey" jdbcType="VARCHAR" />
+    <result column="failReason" property="failreason" jdbcType="VARCHAR" />
+    <result column="soleCode" property="solecode" jdbcType="VARCHAR" />
+    <result column="validityDate" property="validitydate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, orgId, relationNo, realName, sex, niceName, loginName, idType, idNO, phone, createDate, 
+    createTime, province, city, area, addr, isAuth, authDate, authTime, idFrontImgUrl, 
+    idOppositeImgUrl, idHandleImgUrl, bankCardImgUrl, headImgUrl, token, isSetTransPwd, 
+    qrcodeUrl, companyId, role, workKey, failReason, soleCode, validityDate
+  </sql>
+  <select id="totalUser" resultType="string">
+  	select count(id) from tbl_user where isAuth='T'
+  </select>
+  
+  <select id="addUser" resultType="string">
+  	SELECT COUNT(id) FROM tbl_user WHERE authDate=curdate()
+  </select>
+  
+  <select id="visitorUser" resultType="string">
+  	select COUNT(id) from tbl_user where id not in(select userId from tbl_company_user where `status`='applySuc' and currentStatus='normal' ) and isAuth='T'
+  </select>
+</mapper>

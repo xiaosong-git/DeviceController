@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xs.dc.dao.DcRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.xs.dc.bean.DcRole" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, role_name
+  </sql>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dc_role
+  </select>
+  <delete id="deleteRole" parameterType="java.lang.Long" >
+    delete from dc_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertRole" parameterType="com.xs.dc.bean.DcRole" >
+    insert into dc_role (role_name)
+    values (#{roleName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateRole" parameterType="com.xs.dc.bean.DcRole" >
+    update dc_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

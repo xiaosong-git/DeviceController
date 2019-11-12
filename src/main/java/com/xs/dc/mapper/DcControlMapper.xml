@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xs.dc.dao.DcControlMapper" >
+  <resultMap id="BaseResultMap" type="com.xs.dc.bean.DcControl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pingavg" property="pingavg" jdbcType="VARCHAR" />
+    <result column="pingloss" property="pingloss" jdbcType="VARCHAR" />
+    <result column="cpu" property="cpu" jdbcType="VARCHAR" />
+    <result column="memory" property="memory" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pingavg, pingloss, cpu, memory, device_name
+  </sql>
+  
+  <select id="dcControlList" resultMap="BaseResultMap" >
+  		select * from dc_control
+  </select>
+  
+  <update id="updateConrol" parameterType="com.xs.dc.bean.DcControl">
+  		update dc_control
+  	<set >
+      <if test="pingavg != null" >
+        pingavg = #{pingavg,jdbcType=VARCHAR},
+      </if>
+      <if test="pingloss != null" >
+        pingloss = #{pingloss,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null" >
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null" >
+        memory = #{memory,jdbcType=VARCHAR}
+      </if>
+    </set> 
+     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getDcControl" parameterType="string" resultMap="BaseResultMap">
+  	select * from dc_control where device_name=#{deviceName}
+  </select>
+</mapper>
